@@ -24,7 +24,7 @@ const ProfileSingle = ({ params }) => {
 
   useEffect(() => {
     fetchUser();
-  }, [userId]);
+  }, [userId, fetchUser]);
 
   return (
     <>
