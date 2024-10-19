@@ -24,16 +24,14 @@ const ProfileSingle = ({ params }) => {
 
   useEffect(() => {
     fetchUser();
-  }, [userId, fetchUser]);
+  }, [userId]);
 
   return (
     <>
       <Navbar />
       <div className="bg-gray-100 min-h-screen">
-        {" "}
         {loading ? (
           <div className="flex justify-center items-center h-32">
-            {" "}
             <p className="text-xl font-semibold">Loading...</p>
           </div>
         ) : !user ? (
@@ -53,18 +51,20 @@ const ProfileSingle = ({ params }) => {
                     <MdEmail /> {user.email}
                     <FaPhoneAlt /> {user.phoneNumber}
                   </div>
-                  <div className="mt-[10px] flex gap-[20px]">
+                  <div className="mt-2 flex gap-5">
                     <a
                       href={user.linkedIn}
-                      className="bg-blue-600 px-[10px] rounded-lg py-[4px] "
+                      className="bg-blue-600 px-4 py-2 rounded-lg text-white"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       LinkedIn
                     </a>
                     <a
                       href={user.portFolio}
-                      className="bg-blue-600 px-[10px] rounded-lg py-[4px] "
+                      className="bg-blue-600 px-4 py-2 rounded-lg text-white"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       Portfolio
                     </a>
@@ -74,16 +74,20 @@ const ProfileSingle = ({ params }) => {
             </div>
 
             <h3 className="text-xl font-bold text-blue-600 mb-2">Skills:</h3>
-            <div className="flex flex-wrap gap-4">
-              {user.skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="bg-blue-100 text-blue-600 px-4 py-2 rounded-full border border-blue-300 cursor-pointer"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
+            {Array.isArray(user.skills) && user.skills.length > 0 ? (
+              <div className="flex flex-wrap gap-4">
+                {user.skills.map((skill, index) => (
+                  <span
+                    key={index}
+                    className="bg-blue-100 text-blue-600 px-4 py-2 rounded-full border border-blue-300 cursor-pointer"
+                  >
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p>No skills listed.</p>
+            )}
           </div>
         )}
       </div>
