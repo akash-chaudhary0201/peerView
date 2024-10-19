@@ -15,6 +15,8 @@ const ProfileSingle = ({ params }) => {
     try {
       const response = await axios.get(`/api/users/${userId}`);
       setUser(response.data.user);
+      console.log(response.data.user);
+
       setLoading(false);
     } catch (error) {
       console.error("Error fetching user data:", error);
