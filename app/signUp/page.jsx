@@ -129,7 +129,7 @@ const SignupPage = () => {
             required
           />
           <input
-            type="text"
+            type="url"
             placeholder="LinkedIn Profile"
             value={user.linkedIn}
             onChange={(e) => setUser({ ...user, linkedIn: e.target.value })}
@@ -137,7 +137,7 @@ const SignupPage = () => {
             required
           />
           <input
-            type="text"
+            type="url"
             placeholder="Portfolio URL"
             value={user.portFolio}
             onChange={(e) => setUser({ ...user, portFolio: e.target.value })}
