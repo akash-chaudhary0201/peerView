@@ -12,6 +12,7 @@ const Profile = () => {
   const [sectionFilter, setSectionFilter] = useState(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState(""); // Add search query state
   const router = useRouter();
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const Profile = () => {
       try {
         const response = await axios.get("/api/users/allProfiles");
         setUsers(response.data.users);
+        setFilteredUsers(response.data.users); // Initially, all users are displayed
         setIsDataFetched(true);
         setIsLoading(false);
       } catch (error) {
@@ -46,6 +48,23 @@ const Profile = () => {
     setSectionFilter(section);
   };
 
+  const handleSearch = async () => {
+    if (searchQuery.trim() === "") return; // Prevent empty search
+
+    setIsLoading(true);
+
+    try {
+      const response = await axios.get(
+        `/api/users/searchUser?query=${searchQuery}`
+      );
+      setFilteredUsers(response.data.users); // Update users with search results
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching searched users:", error);
+      setIsLoading(false);
+    }
+  };
+
   const changePage = (userId) => {
     router.push(`/profile/${userId}`);
   };
@@ -53,78 +72,74 @@ const Profile = () => {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto mt-[40px]">
+      <div className="container mx-auto mt-[40px] px-4">
         <div className="flex justify-center items-center">
-          <h1 className="text-[30px] font-bold">
+          <h1 className="text-[30px] font-bold text-center">
             Student Profiles: Discover Your Peers
           </h1>
         </div>
-
-        <div className="flex mt-[40px] ">
-          <div className="w-[25%] pl-[40px]  shadow-lg rounded-lg mr-[30px] ">
-            <div>
-              <h1 className="text-orange-600 text-[22px] mb-[10px]">Year</h1>
-              <div className="flex gap-[10px] flex-wrap">
-                <button
-                  onClick={() => fetchUsers(1)}
-                  className={`py-2 px-4 rounded ${
-                    yearFilter === 1 ? "bg-orange-500" : "bg-blue-500"
-                  } text-white w-[100px]`}
-                >
-                  1st Year
-                </button>
-                <button
-                  onClick={() => fetchUsers(2)}
-                  className={`py-2 px-4 rounded ${
-                    yearFilter === 2 ? "bg-orange-500" : "bg-blue-500"
-                  } text-white w-[100px]`}
-                >
-                  2nd Year
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-[20px]">
-              <h1 className="text-orange-600 text-[22px] mb-[10px]">Section</h1>
-              <div className="flex flex-wrap gap-[10px]">
-                <button
-                  onClick={() => fetchUsersBySection("A")}
-                  className={`py-2 px-4 rounded ${
-                    sectionFilter === "A" ? "bg-orange-500" : "bg-blue-500"
-                  } text-white w-[100px]`}
-                >
-                  Section A
-                </button>
-                <button
-                  onClick={() => fetchUsersBySection("B")}
-                  className={`py-2 px-4 rounded ${
-                    sectionFilter === "B" ? "bg-orange-500" : "bg-blue-500"
-                  } text-white w-[100px]`}
-                >
-                  Section B
-                </button>
-                <button
-                  onClick={() => fetchUsersBySection("C")}
-                  className={`py-2 px-4 rounded ${
-                    sectionFilter === "C" ? "bg-orange-500" : "bg-blue-500"
-                  } text-white w-[100px]`}
-                >
-                  Section C
-                </button>
-                <button
-                  onClick={() => fetchUsersBySection("D")}
-                  className={`py-2 px-4 rounded ${
-                    sectionFilter === "D" ? "bg-orange-500" : "bg-blue-500"
-                  } text-white w-[100px]`}
-                >
-                  Section D
-                </button>
-              </div>
+        <div className="flex justify-center gap-[10px] items-center">
+          <div>
+            <div className="flex gap-[10px] flex-wrap">
+              <button
+                onClick={() => fetchUsers(1)}
+                className={`py-2 px-4 rounded ${
+                  yearFilter === 1 ? "bg-orange-500" : "bg-blue-500"
+                } text-white w-[100px]`}
+              >
+                1st Year
+              </button>
+              <button
+                onClick={() => fetchUsers(2)}
+                className={`py-2 px-4 rounded ${
+                  yearFilter === 2 ? "bg-orange-500" : "bg-blue-500"
+                } text-white w-[100px]`}
+              >
+                2nd Year
+              </button>
             </div>
           </div>
+          <div className="bg-white h-[38px] w-[2px]"></div>
+          <div>
+            <div className="flex flex-wrap gap-[10px]">
+              <button
+                onClick={() => fetchUsersBySection("A")}
+                className={`py-2 px-4 w-[130px] rounded ${
+                  sectionFilter === "A" ? "bg-orange-500" : "bg-blue-500"
+                } text-white w-[100px]`}
+              >
+                Section A
+              </button>
+              <button
+                onClick={() => fetchUsersBySection("B")}
+                className={`py-2 px-4 w-[130px] rounded ${
+                  sectionFilter === "B" ? "bg-orange-500" : "bg-blue-500"
+                } text-white w-[100px]`}
+              >
+                Section B
+              </button>
+              <button
+                onClick={() => fetchUsersBySection("C")}
+                className={`py-2 px-4 w-[130px] rounded ${
+                  sectionFilter === "C" ? "bg-orange-500" : "bg-blue-500"
+                } text-white w-[100px]`}
+              >
+                Section C
+              </button>
+              <button
+                onClick={() => fetchUsersBySection("D")}
+                className={`py-2 px-4 w-[130px] rounded ${
+                  sectionFilter === "D" ? "bg-orange-500" : "bg-blue-500"
+                } text-white w-[100px]`}
+              >
+                Section D
+              </button>
+            </div>
+          </div>
+        </div>
 
-          {/* Profiles Display */}
-          <div className="w-[75%] flex pr-[10px] flex-wrap gap-[20px]">
+        <div className="flex flex-col lg:flex-row mt-[40px]">
+          <div className="flex  gap-[20px] flex-wrap w-[70%]">
             {isLoading ? (
               <p className="text-gray-500">Fetching Details...</p>
             ) : isDataFetched && filteredUsers.length === 0 ? (
@@ -139,7 +154,7 @@ const Profile = () => {
                   <span className="block text-white text-center text-[20px]">
                     {usr.userName}
                   </span>
-                  <p className="job font-light text-gray-400 text-[16px] text-center ">
+                  <p className="job font-light text-gray-400 text-[16px] text-center">
                     {usr.phoneNumber}
                   </p>
                   <button

@@ -31,7 +31,7 @@ const ProfileSingle = ({ params }) => {
   return (
     <>
       <Navbar />
-      <div className="bg-gray-100 min-h-screen">
+      <div className="">
         {loading ? (
           <div className="flex justify-center items-center h-32">
             <p className="text-xl font-semibold">Loading...</p>
@@ -41,41 +41,59 @@ const ProfileSingle = ({ params }) => {
             <p className="text-xl font-semibold">User not found</p>
           </div>
         ) : (
-          <div className="container mx-auto p-6 bg-white rounded-lg shadow-lg">
-            <div className="flex items-center justify-between border-b pb-4 mb-4">
-              <div className="flex items-center gap-4">
-                <div className="w-40 h-40 bg-gray-200 rounded-full overflow-hidden shadow-lg"></div>
-                <div>
-                  <h2 className="text-2xl font-semibold text-gray-800">
-                    {user.userName}
-                  </h2>
-                  <div className="flex items-center gap-2 text-gray-600">
-                    <MdEmail /> {user.email}
-                    <FaPhoneAlt /> {user.phoneNumber}
-                  </div>
-                  <div className="mt-2 flex gap-5">
-                    <a
-                      href={user.linkedIn}
-                      className="bg-blue-600 px-4 py-2 rounded-lg text-white"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      LinkedIn
-                    </a>
-                    <a
-                      href={user.portFolio}
-                      className="bg-blue-600 px-4 py-2 rounded-lg text-white"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Portfolio
-                    </a>
-                  </div>
+          <div className="px-[150px]">
+            <div className="flex items-center justify-between">
+              {" "}
+              {/* Added justify-between here */}
+              <div className="flex items-center">
+                <div className="h-[150px] w-[150px] bg-red-100 rounded-full"></div>
+                <div className="ml-4">
+                  {" "}
+                  {/* Added margin-left for spacing */}
+                  <h1 className="text-[30px] font-semibold">{user.userName}</h1>
+                  <h1>{user.email}</h1>
                 </div>
               </div>
+              <div>
+                {" "}
+                {/* This div is now aligned to the right */}
+                <a target="_blank" href={user.linkedIn}>
+                  LinkedIn Account
+                </a>
+              </div>
             </div>
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
-            <h3 className="text-xl font-bold text-blue-600 mb-2">Skills:</h3>
+export default ProfileSingle;
+
+{
+  /* <div className="mt-2 flex gap-5">
+<a
+  href={user.linkedIn}
+  className="bg-blue-600 px-4 py-2 rounded-lg text-white"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  LinkedIn
+</a>
+<a
+  href={user.portFolio}
+  className="bg-blue-600 px-4 py-2 rounded-lg text-white"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Portfolio
+</a>
+</div> */
+}
+
+{
+  /* <h3 className="text-xl font-bold text-blue-600 mb-2">Skills:</h3>
             {Array.isArray(user.skills) && user.skills.length > 0 ? (
               <div className="flex flex-wrap gap-4">
                 {user.skills.map((skill, index) => (
@@ -89,12 +107,5 @@ const ProfileSingle = ({ params }) => {
               </div>
             ) : (
               <p>No skills listed.</p>
-            )}
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
-
-export default ProfileSingle;
+            )} */
+}
