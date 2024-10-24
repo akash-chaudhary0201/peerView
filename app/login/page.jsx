@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 
 const LoginPage = () => {
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -15,6 +16,7 @@ const LoginPage = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const response = await axios.post("/api/users/logIn", {
         email: user.email,
@@ -30,6 +32,8 @@ const LoginPage = () => {
     } catch (error) {
       toast.error("An error occurred while logging in.");
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,7 +85,7 @@ const LoginPage = () => {
             onClick={handleLogin}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Sign in
+            {loading ? "Please Wait..." : "Sign In"}
           </button>
         </form>
 

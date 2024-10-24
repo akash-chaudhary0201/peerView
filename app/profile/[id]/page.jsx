@@ -41,25 +41,69 @@ const ProfileSingle = ({ params }) => {
             <p className="text-xl font-semibold">User not found</p>
           </div>
         ) : (
-          <div className="px-[150px]">
-            <div className="flex items-center justify-between">
-              {" "}
-              {/* Added justify-between here */}
-              <div className="flex items-center">
-                <div className="h-[150px] w-[150px] bg-red-100 rounded-full"></div>
-                <div className="ml-4">
-                  {" "}
-                  {/* Added margin-left for spacing */}
-                  <h1 className="text-[30px] font-semibold">{user.userName}</h1>
-                  <h1>{user.email}</h1>
-                </div>
+          <div className="flex  px-[150px] py-[20px]">
+            <div>
+              <div className="bg-white h-[250px] w-[250px]"></div>
+              <div className="mt-[20px]">
+                <h1 className="text-[25px]">Skills :- </h1>
+                <ul className="list-disc ml-[20px]">
+                  {user.skills.map((skill) => (
+                    <li className="text-[20px]">{skill}</li>
+                  ))}
+                </ul>
               </div>
+            </div>
+            <div className="p-[20px] w-full">
               <div>
-                {" "}
-                {/* This div is now aligned to the right */}
-                <a target="_blank" href={user.linkedIn}>
-                  LinkedIn Account
-                </a>
+                <div>
+                  <h1 className="text-[35px]">{user.userName}</h1>
+                  <h1 className="text-[20px] text-blue-600">
+                    Software Engineer
+                  </h1>
+                </div>
+                <div className="pt-[20px]">
+                  <ul className="flex gap-[20px] flex-wrap">
+                    <li>
+                      {" "}
+                      Year :- &nbsp;
+                      <span>{user.year}</span>
+                    </li>
+                    <li>
+                      Section :- &nbsp;
+                      <span className="uppercase">{user.section}</span>
+                    </li>
+                    <li>
+                      Phone :- &nbsp; <span>{user.phoneNumber}</span>
+                    </li>
+                    <li>
+                      Email :- &nbsp; <span>{user.email}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="flex flex-wrap mt-[20px] gap-[20px]">
+                  <a
+                    className="bg-blue-600 px-[20px] rounded-sm text-[20px] py-[6px] font-semibold"
+                    href={user.linkedIn}
+                  >
+                    LinkedIn
+                  </a>
+                  <a
+                    className="bg-blue-600 rounded-sm px-[20px] text-[20px] py-[6px] font-semibold"
+                    href={user.portFolio}
+                  >
+                    Portfolio
+                  </a>
+                </div>
+                <hr className="w-full mt-[20px] ml-[10px]" />
+                <div className="mt-[20px]">
+                  <h1 className="text-[30px]">Projects</h1>
+                  <div>
+                    <h1 className="text-blue-600 text-[50px]">
+                      Soon You will be able to add your projects to your
+                      profile.... Thank You
+                    </h1>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -70,42 +114,3 @@ const ProfileSingle = ({ params }) => {
 };
 
 export default ProfileSingle;
-
-{
-  /* <div className="mt-2 flex gap-5">
-<a
-  href={user.linkedIn}
-  className="bg-blue-600 px-4 py-2 rounded-lg text-white"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  LinkedIn
-</a>
-<a
-  href={user.portFolio}
-  className="bg-blue-600 px-4 py-2 rounded-lg text-white"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Portfolio
-</a>
-</div> */
-}
-
-{
-  /* <h3 className="text-xl font-bold text-blue-600 mb-2">Skills:</h3>
-            {Array.isArray(user.skills) && user.skills.length > 0 ? (
-              <div className="flex flex-wrap gap-4">
-                {user.skills.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-100 text-blue-600 px-4 py-2 rounded-full border border-blue-300 cursor-pointer"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <p>No skills listed.</p>
-            )} */
-}

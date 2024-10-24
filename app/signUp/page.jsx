@@ -167,7 +167,7 @@ const SignupPage = () => {
               type="submit"
               className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-md hover:bg-indigo-700"
             >
-              Sign Up
+              {loading ? "Please Wait..." : "Sign Up"}
             </button>
           </div>
         </form>
@@ -180,13 +180,6 @@ const SignupPage = () => {
           </p>
         </div>
       </div>
-
-      {/* Loading overlay when the form is being submitted */}
-      {loading && (
-        <div className="absolute inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center">
-          <div className="text-white text-2xl">Creating Profile...</div>
-        </div>
-      )}
 
       <div>
         <Toaster position="top-center" reverseOrder={false} />

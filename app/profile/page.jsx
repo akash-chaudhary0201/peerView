@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { FaSearch } from "react-icons/fa";
 
 const Profile = () => {
   const [users, setUsers] = useState([]);
@@ -73,12 +74,30 @@ const Profile = () => {
     <>
       <Navbar />
       <div className="container mx-auto mt-[40px] px-4">
-        <div className="flex justify-center items-center">
+        <div className="flex flex-col gap-[20px] justify-center items-center">
           <h1 className="text-[30px] font-bold text-center">
             Student Profiles: Discover Your Peers
           </h1>
+          <div className="mb-[20px] flex justify-center items-center gap-2">
+            {" "}
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by Name, Skills"
+              className="py-2 text-black px-4 border rounded-lg w-full md:w-64"
+            />
+            <button
+              onClick={handleSearch}
+              className="flex justify-center items-center text-[25px]"
+            >
+              {" "}
+              <FaSearch />
+            </button>
+          </div>
         </div>
-        <div className="flex justify-center gap-[10px] items-center">
+
+        <div className="flex justify-center gap-[10px] mt-[20px] items-center">
           <div>
             <div className="flex gap-[10px] flex-wrap">
               <button
@@ -155,7 +174,7 @@ const Profile = () => {
                     {usr.userName}
                   </span>
                   <p className="job font-light text-gray-400 text-[16px] text-center">
-                    {usr.phoneNumber}
+                    {usr.skills.join(", ")}
                   </p>
                   <button
                     onClick={() => changePage(usr._id)}
