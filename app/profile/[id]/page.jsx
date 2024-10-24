@@ -26,7 +26,7 @@ const ProfileSingle = ({ params }) => {
 
   useEffect(() => {
     fetchUser();
-  }, [userId]);
+  }, [fetchUser, userId]);
 
   return (
     <>
@@ -48,7 +48,9 @@ const ProfileSingle = ({ params }) => {
                 <h1 className="text-[25px]">Skills :- </h1>
                 <ul className="list-disc ml-[20px]">
                   {user.skills.map((skill) => (
-                    <li className="text-[20px]">{skill}</li>
+                    <li key={skill} className="text-[20px]">
+                      {skill}
+                    </li>
                   ))}
                 </ul>
               </div>

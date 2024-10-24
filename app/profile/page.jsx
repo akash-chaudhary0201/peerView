@@ -157,7 +157,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row mt-[40px]">
+        <div className="flex flex-col lg:flex-row mt-[40px] px-[150px]">
           <div className="flex  gap-[20px] flex-wrap w-[70%]">
             {isLoading ? (
               <p className="text-gray-500">Fetching Details...</p>
