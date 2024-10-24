@@ -11,22 +11,21 @@ const ProfileSingle = ({ params }) => {
   const [loading, setLoading] = useState(true);
   const userId = params.id;
 
-  const fetchUser = async () => {
-    try {
-      const response = await axios.get(`/api/users/${userId}`);
-      setUser(response.data.user);
-      console.log(response.data.user);
-
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    console.log(`Fetching user with ID: ${userId}`);
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`/api/users/${userId}`);
+        setUser(response.data.user);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchUser();
-  }, [fetchUser, userId]);
+  }, [userId]);
 
   return (
     <>

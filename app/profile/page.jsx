@@ -13,15 +13,19 @@ const Profile = () => {
   const [sectionFilter, setSectionFilter] = useState(null);
   const [isDataFetched, setIsDataFetched] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState(""); // Add search query state
+  const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const response = await axios.get("/api/users/allProfiles");
+        const response = await axios.get(
+          `/api/users/allProfiles?timestamp=${Date.now()}`
+        );
         setUsers(response.data.users);
-        setFilteredUsers(response.data.users); // Initially, all users are displayed
+        console.log(response.data.users);
+
+        setFilteredUsers(response.data.users);
         setIsDataFetched(true);
         setIsLoading(false);
       } catch (error) {
@@ -50,7 +54,7 @@ const Profile = () => {
   };
 
   const handleSearch = async () => {
-    if (searchQuery.trim() === "") return; // Prevent empty search
+    if (searchQuery.trim() === "") return;
 
     setIsLoading(true);
 
@@ -58,7 +62,7 @@ const Profile = () => {
       const response = await axios.get(
         `/api/users/searchUser?query=${searchQuery}`
       );
-      setFilteredUsers(response.data.users); // Update users with search results
+      setFilteredUsers(response.data.users);
       setIsLoading(false);
     } catch (error) {
       console.error("Error fetching searched users:", error);
