@@ -19,9 +19,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchAllUsers = async () => {
       try {
-        const response = await axios.get(
-          `/api/users/allProfiles?timestamp=${Date.now()}`
-        );
+        const response = await axios.get(`/api/users/allProfiles`);
         setUsers(response.data.users);
         console.log(response.data.users);
 

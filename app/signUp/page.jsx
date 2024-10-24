@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { mutate } from "swr";
 
 const SignupPage = () => {
   const [user, setUser] = useState({
@@ -22,23 +23,24 @@ const SignupPage = () => {
   });
 
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state for the signup process
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true); // Start loading
+    setLoading(true);
     try {
       const response = await axios.post("/api/users/signUp", {
         ...user,
-        skills: user.skills.split(",").map((skill) => skill.trim()), // Convert skills to array
+        skills: user.skills.split(",").map((skill) => skill.trim()),
         certifications: user.certifications
           .split(",")
-          .map((cert) => cert.trim()), // Convert certifications to array
+          .map((cert) => cert.trim()),
       });
 
       if (response.data.success) {
+        mutate("/api/users/allProfiles");
         localStorage.setItem("email", response.data.newUser.email);
         router.push("/otp_verification");
       } else {
@@ -48,13 +50,12 @@ const SignupPage = () => {
       setError("An error occurred during signup.");
       console.error(error);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-gray-900">
-      {/* Conditional blur effect when loading */}
       <div
         className={`bg-gray-800 shadow-md rounded-lg p-6 max-w-lg w-full ${
           loading ? "blur-sm" : ""
