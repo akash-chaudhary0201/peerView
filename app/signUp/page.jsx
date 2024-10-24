@@ -5,7 +5,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { mutate } from "swr";
 
 const SignupPage = () => {
   const [user, setUser] = useState({
@@ -40,7 +39,6 @@ const SignupPage = () => {
       });
 
       if (response.data.success) {
-        mutate("/api/users/allProfiles");
         localStorage.setItem("email", response.data.newUser.email);
         router.push("/otp_verification");
       } else {

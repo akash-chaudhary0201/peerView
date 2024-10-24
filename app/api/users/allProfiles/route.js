@@ -8,10 +8,14 @@ export const GET = async () => {
 
     const users = await User.find({}).select("-password");
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       success: true,
       users,
     });
+
+    response.headers.set("Cache-Control", "no-store");
+
+    return response;
   } catch (error) {
     console.error("Error retrieving users:", error);
 
